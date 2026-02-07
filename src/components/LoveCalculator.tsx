@@ -9,21 +9,13 @@ import { ResultDisplay } from '@/components/ResultDisplay';
 import { ShareButtons } from '@/components/ShareButtons';
 import { SoundToggle } from '@/components/SoundToggle';
 import { useSoundEffects } from '@/hooks/useSoundEffects';
-import { 
-  countLetters, 
-  buildPyramid, 
-  getFinalPercentage,
-  type LetterCount,
-  type CalculationStep 
-} from '@/lib/loveCalculator';
-
+import { countLetters, buildPyramid, getFinalPercentage, type LetterCount, type CalculationStep } from '@/lib/loveCalculator';
 type CalculatorPhase = 'input' | 'tally' | 'pyramid' | 'result';
-
 const LoveCalculator: React.FC = () => {
   const [name1, setName1] = useState('');
   const [name2, setName2] = useState('');
   const [phase, setPhase] = useState<CalculatorPhase>('input');
-  
+
   // Animation state
   const [phrase, setPhrase] = useState('');
   const [letterCounts, setLetterCounts] = useState<LetterCount[]>([]);
@@ -31,28 +23,32 @@ const LoveCalculator: React.FC = () => {
   const [pyramidSteps, setPyramidSteps] = useState<CalculationStep[]>([]);
   const [visiblePyramidRows, setVisiblePyramidRows] = useState(0);
   const [finalPercentage, setFinalPercentage] = useState(0);
-  
-  const { playSound, isMuted, toggleMute } = useSoundEffects();
-
+  const {
+    playSound,
+    isMuted,
+    toggleMute
+  } = useSoundEffects();
   const canCalculate = name1.trim().length > 0 && name2.trim().length > 0;
-
   const handleCalculate = useCallback(() => {
     if (!canCalculate) return;
-    
+
     // Reset animation state
     setVisibleLetterCount(0);
     setVisiblePyramidRows(0);
-    
+
     // Get letter counts and build pyramid
-    const { phrase: calcPhrase, counts, sequence } = countLetters(name1.trim(), name2.trim());
+    const {
+      phrase: calcPhrase,
+      counts,
+      sequence
+    } = countLetters(name1.trim(), name2.trim());
     const steps = buildPyramid(sequence);
     const percentage = getFinalPercentage(steps);
-    
     setPhrase(calcPhrase);
     setLetterCounts(counts);
     setPyramidSteps(steps);
     setFinalPercentage(percentage);
-    
+
     // Start animation sequence
     setPhase('tally');
     playSound('pencil');
@@ -61,7 +57,6 @@ const LoveCalculator: React.FC = () => {
   // Animate letter tally
   useEffect(() => {
     if (phase !== 'tally') return;
-    
     if (visibleLetterCount < letterCounts.length) {
       const timer = setTimeout(() => {
         setVisibleLetterCount(prev => prev + 1);
@@ -80,12 +75,11 @@ const LoveCalculator: React.FC = () => {
   // Animate pyramid rows
   useEffect(() => {
     if (phase !== 'pyramid') return;
-    
     if (visiblePyramidRows < pyramidSteps.length) {
       const timer = setTimeout(() => {
         setVisiblePyramidRows(prev => prev + 1);
         playSound('scribble');
-        
+
         // Play heartbeat as we get closer to the end
         if (visiblePyramidRows >= pyramidSteps.length - 3) {
           playSound('heartbeat');
@@ -101,7 +95,6 @@ const LoveCalculator: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [phase, visiblePyramidRows, pyramidSteps.length, playSound]);
-
   const handleReset = () => {
     setPhase('input');
     setName1('');
@@ -113,9 +106,7 @@ const LoveCalculator: React.FC = () => {
     setVisiblePyramidRows(0);
     setFinalPercentage(0);
   };
-
-  return (
-    <div className="min-h-screen notebook-paper relative overflow-hidden">
+  return <div className="min-h-screen notebook-paper relative overflow-hidden">
       {/* Decorative doodles */}
       <NotebookDoodles />
       
@@ -136,17 +127,11 @@ const LoveCalculator: React.FC = () => {
         </p>
         
         {/* Calculator card */}
-        <div className="w-full max-w-lg mx-auto bg-card/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-8 border border-border">
+        <div className="w-full max-w-sm mx-auto bg-card/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-8 border border-border">
           
-          {phase === 'input' && (
-            <div className="space-y-6 w-full">
+          {phase === 'input' && <div className="space-y-6 w-full">
               {/* Name inputs */}
-              <NameInput
-                label="Your Name"
-                value={name1}
-                onChange={setName1}
-                placeholder="Enter your name..."
-              />
+              <NameInput label="Your Name" value={name1} onChange={setName1} placeholder="Enter your name..." />
               
               {/* LOVES text */}
               <div className="text-center py-4">
@@ -157,78 +142,39 @@ const LoveCalculator: React.FC = () => {
                 </span>
               </div>
               
-              <NameInput
-                label="Crush's Name"
-                value={name2}
-                onChange={setName2}
-                placeholder="Enter their name..."
-              />
+              <NameInput label="Crush's Name" value={name2} onChange={setName2} placeholder="Enter their name..." />
               
               {/* Calculate button */}
               <div className="pt-4 flex justify-center">
-                <Button
-                  onClick={handleCalculate}
-                  disabled={!canCalculate}
-                  className="gap-2 text-lg px-8 py-6 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-50"
-                >
+                <Button onClick={handleCalculate} disabled={!canCalculate} className="gap-2 text-lg px-8 py-6 rounded-full bg-primary hover:bg-primary/90 disabled:opacity-50">
                   <Heart className="w-5 h-5" fill="currentColor" />
                   Calculate Love!
                 </Button>
               </div>
-            </div>
-          )}
+            </div>}
           
-          {(phase === 'tally' || phase === 'pyramid' || phase === 'result') && (
-            <div className="space-y-6">
-              {phase === 'tally' && (
-                <h2 className="text-xl text-center text-muted-foreground">Counting letters...</h2>
-              )}
-              <LetterTally 
-                phrase={phrase} 
-                counts={letterCounts} 
-                visibleCount={phase === 'tally' ? visibleLetterCount : letterCounts.length} 
-              />
-            </div>
-          )}
+          {(phase === 'tally' || phase === 'pyramid' || phase === 'result') && <div className="space-y-6">
+              {phase === 'tally' && <h2 className="text-xl text-center text-muted-foreground">Counting letters...</h2>}
+              <LetterTally phrase={phrase} counts={letterCounts} visibleCount={phase === 'tally' ? visibleLetterCount : letterCounts.length} />
+            </div>}
           
-          {(phase === 'pyramid' || phase === 'result') && (
-            <div className="space-y-4">
-              {phase === 'pyramid' && (
-                <h2 className="text-xl text-center text-muted-foreground">Calculating...</h2>
-              )}
-              <NumberPyramid 
-                steps={pyramidSteps} 
-                visibleRows={phase === 'result' ? pyramidSteps.length : visiblePyramidRows} 
-              />
-            </div>
-          )}
+          {(phase === 'pyramid' || phase === 'result') && <div className="space-y-4">
+              {phase === 'pyramid' && <h2 className="text-xl text-center text-muted-foreground">Calculating...</h2>}
+              <NumberPyramid steps={pyramidSteps} visibleRows={phase === 'result' ? pyramidSteps.length : visiblePyramidRows} />
+            </div>}
           
-          {phase === 'result' && (
-            <div className="space-y-4">
-              <ResultDisplay 
-                percentage={finalPercentage} 
-                name1={name1.trim()} 
-                name2={name2.trim()} 
-              />
+          {phase === 'result' && <div className="space-y-4">
+              <ResultDisplay percentage={finalPercentage} name1={name1.trim()} name2={name2.trim()} />
               
-              <ShareButtons 
-                percentage={finalPercentage} 
-                name1={name1.trim()} 
-                name2={name2.trim()} 
-              />
+              <ShareButtons percentage={finalPercentage} name1={name1.trim()} name2={name2.trim()} />
               
               <div className="flex justify-center pt-4">
-                <Button
-                  onClick={handleReset}
-                  variant="outline"
-                  className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                >
+                <Button onClick={handleReset} variant="outline" className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   <RotateCcw className="w-4 h-4" />
                   Try Again
                 </Button>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
         
         {/* Valentine's site promo */}
@@ -236,12 +182,7 @@ const LoveCalculator: React.FC = () => {
           <p className="text-sm text-muted-foreground mb-2">
             Want to create something special?
           </p>
-          <a 
-            href="https://valentines-site.lovable.app" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary hover:text-primary/80 font-medium underline underline-offset-4 transition-colors"
-          >
+          <a href="https://valentines-site.lovable.app" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 font-medium underline underline-offset-4 transition-colors">
             💌 Check out our Valentine's Site Creator
           </a>
         </div>
@@ -251,8 +192,6 @@ const LoveCalculator: React.FC = () => {
           Made with 💕 for fun
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default LoveCalculator;
