@@ -13,12 +13,17 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        handwritten: ["'Architects Daughter'", "cursive"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        "notebook-line": "hsl(var(--notebook-line))",
+        "notebook-margin": "hsl(var(--notebook-margin))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -65,25 +70,40 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        heartbeat: {
+          "0%, 100%": { transform: "scale(1)" },
+          "10%": { transform: "scale(1.15)" },
+          "20%": { transform: "scale(1)" },
+          "30%": { transform: "scale(1.15)" },
+          "40%": { transform: "scale(1)" },
+        },
+        "write-in": {
+          "0%": { opacity: "0", transform: "translateY(-5px) rotate(-3deg)" },
+          "100%": { opacity: "1", transform: "translateY(0) rotate(0deg)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(-8px) rotate(3deg)" },
+        },
+        sparkle: {
+          "0%, 100%": { opacity: "0.5", transform: "scale(0.8)" },
+          "50%": { opacity: "1", transform: "scale(1.2)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        heartbeat: "heartbeat 1.5s ease-in-out infinite",
+        "write-in": "write-in 0.3s ease-out forwards",
+        float: "float 4s ease-in-out infinite",
+        sparkle: "sparkle 2s ease-in-out infinite",
       },
     },
   },
