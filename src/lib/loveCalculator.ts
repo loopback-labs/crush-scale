@@ -33,11 +33,8 @@ export function countLetters(name1: string, name2: string): { phrase: string; co
     count: letterMap.get(letter)!
   }));
   
-  // Create the initial sequence from the phrase (count of each letter as it appears)
-  const sequence: number[] = [];
-  for (const char of phrase) {
-    sequence.push(letterMap.get(char)!);
-  }
+  // Create the initial sequence: one count per unique letter (in order of appearance)
+  const sequence: number[] = orderedLetters.map(letter => letterMap.get(letter)!);
   
   return { phrase, counts, sequence };
 }
@@ -50,8 +47,13 @@ export function reduceSequence(numbers: number[]): number[] {
   // Add adjacent pairs: n[0]+n[1], n[1]+n[2], n[2]+n[3], etc.
   for (let i = 0; i < numbers.length - 1; i++) {
     const sum = numbers[i] + numbers[i + 1];
-    // If sum is 10 or more, only keep the ones digit (mod 10)
-    newNumbers.push(sum % 10);
+    // If sum is 10 or more, split into two separate digits
+    if (sum >= 10) {
+      newNumbers.push(Math.floor(sum / 10)); // tens digit
+      newNumbers.push(sum % 10);              // ones digit
+    } else {
+      newNumbers.push(sum);
+    }
   }
   
   return newNumbers;
