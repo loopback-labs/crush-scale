@@ -139,7 +139,7 @@ const LoveCalculator: React.FC = () => {
         <div className="w-full max-w-lg mx-auto bg-card/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-8 border border-border">
           
           {phase === 'input' && (
-            <div className="space-y-6">
+            <div className="space-y-6 w-full">
               {/* Name inputs */}
               <NameInput
                 label="Your Name"
