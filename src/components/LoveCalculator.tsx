@@ -178,13 +178,15 @@ const LoveCalculator: React.FC = () => {
             </div>
           )}
           
-          {phase === 'tally' && (
+          {(phase === 'tally' || phase === 'pyramid' || phase === 'result') && (
             <div className="space-y-6">
-              <h2 className="text-xl text-center text-muted-foreground">Counting letters...</h2>
+              {phase === 'tally' && (
+                <h2 className="text-xl text-center text-muted-foreground">Counting letters...</h2>
+              )}
               <LetterTally 
                 phrase={phrase} 
                 counts={letterCounts} 
-                visibleCount={visibleLetterCount} 
+                visibleCount={phase === 'tally' ? visibleLetterCount : letterCounts.length} 
               />
             </div>
           )}
