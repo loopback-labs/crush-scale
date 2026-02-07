@@ -44,9 +44,12 @@ export function reduceSequence(numbers: number[]): number[] {
   
   const newNumbers: number[] = [];
   
-  // Add adjacent pairs: n[0]+n[1], n[1]+n[2], n[2]+n[3], etc.
-  for (let i = 0; i < numbers.length - 1; i++) {
-    const sum = numbers[i] + numbers[i + 1];
+  // Add first + last, then move inward
+  let left = 0;
+  let right = numbers.length - 1;
+  
+  while (left < right) {
+    const sum = numbers[left] + numbers[right];
     // If sum is 10 or more, split into two separate digits
     if (sum >= 10) {
       newNumbers.push(Math.floor(sum / 10)); // tens digit
@@ -54,6 +57,13 @@ export function reduceSequence(numbers: number[]): number[] {
     } else {
       newNumbers.push(sum);
     }
+    left++;
+    right--;
+  }
+  
+  // If odd length, include the middle number
+  if (left === right) {
+    newNumbers.push(numbers[left]);
   }
   
   return newNumbers;
