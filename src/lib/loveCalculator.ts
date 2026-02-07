@@ -46,26 +46,12 @@ export function reduceSequence(numbers: number[]): number[] {
   if (numbers.length <= 2) return numbers;
   
   const newNumbers: number[] = [];
-  const halfLength = Math.floor(numbers.length / 2);
   
-  for (let i = 0; i < halfLength; i++) {
-    const sum = numbers[i] + numbers[numbers.length - 1 - i];
-    // If sum is 10 or more, split into two digits
-    if (sum >= 10) {
-      const tens = Math.floor(sum / 10);
-      const ones = sum % 10;
-      newNumbers.push(tens, ones);
-    } else {
-      newNumbers.push(sum);
-    }
-  }
-  
-  // If odd number of elements, include the middle one
-  if (numbers.length % 2 === 1) {
-    // Insert middle element in the middle of new array
-    const middleIndex = Math.floor(numbers.length / 2);
-    const insertPos = Math.floor(newNumbers.length / 2);
-    newNumbers.splice(insertPos, 0, numbers[middleIndex]);
+  // Add adjacent pairs: n[0]+n[1], n[1]+n[2], n[2]+n[3], etc.
+  for (let i = 0; i < numbers.length - 1; i++) {
+    const sum = numbers[i] + numbers[i + 1];
+    // If sum is 10 or more, only keep the ones digit (mod 10)
+    newNumbers.push(sum % 10);
   }
   
   return newNumbers;
