@@ -136,7 +136,7 @@ const LoveCalculator: React.FC = () => {
         </p>
         
         {/* Calculator card */}
-        <div className="w-full max-w-lg bg-card/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-8 border border-border">
+        <div className="w-full max-w-lg mx-auto bg-card/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-8 border border-border">
           
           {phase === 'input' && (
             <div className="space-y-6">
