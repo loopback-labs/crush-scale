@@ -106,7 +106,7 @@ const LoveCalculator: React.FC = () => {
     setVisiblePyramidRows(0);
     setFinalPercentage(0);
   };
-  return <div className="min-h-screen notebook-paper relative overflow-hidden">
+  return <main className="min-h-screen notebook-paper relative overflow-hidden" role="main">
       {/* Decorative doodles */}
       <NotebookDoodles />
       
@@ -119,12 +119,14 @@ const LoveCalculator: React.FC = () => {
       {/* Main content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
         {/* Title */}
-        <h1 className="text-3xl md:text-5xl text-primary mb-2 text-center">
-          💕 Love Calculator 💕
-        </h1>
-        <p className="text-muted-foreground mb-8 text-center">
-          Find out your love percentage!
-        </p>
+        <header className="text-center mb-8">
+          <h1 className="text-3xl md:text-5xl text-primary mb-2">
+            💕 Love Calculator 💕
+          </h1>
+          <p className="text-muted-foreground">
+            Find out your love percentage!
+          </p>
+        </header>
         
         {/* Calculator card */}
         <div className="w-full max-w-sm mx-auto bg-card/80 backdrop-blur-sm rounded-lg shadow-lg p-6 md:p-8 border border-border">
@@ -192,6 +194,6 @@ const LoveCalculator: React.FC = () => {
           Made with 💕 for fun
         </p>
       </div>
-    </div>;
+    </main>;
 };
 export default LoveCalculator;
