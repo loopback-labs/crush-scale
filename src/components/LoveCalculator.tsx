@@ -231,8 +231,23 @@ const LoveCalculator: React.FC = () => {
           )}
         </div>
         
+        {/* Valentine's site promo */}
+        <div className="mt-8 p-4 bg-card/60 backdrop-blur-sm rounded-lg border border-border text-center max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground mb-2">
+            Want to create something special?
+          </p>
+          <a 
+            href="https://valentines-site.lovable.app" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:text-primary/80 font-medium underline underline-offset-4 transition-colors"
+          >
+            💌 Check out our Valentine's Site Creator
+          </a>
+        </div>
+        
         {/* Footer */}
-        <p className="text-sm text-muted-foreground mt-8 text-center">
+        <p className="text-sm text-muted-foreground mt-6 text-center">
           Made with 💕 for fun
         </p>
       </div>
