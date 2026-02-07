@@ -189,12 +189,14 @@ const LoveCalculator: React.FC = () => {
             </div>
           )}
           
-          {phase === 'pyramid' && (
+          {(phase === 'pyramid' || phase === 'result') && (
             <div className="space-y-4">
-              <h2 className="text-xl text-center text-muted-foreground">Calculating...</h2>
+              {phase === 'pyramid' && (
+                <h2 className="text-xl text-center text-muted-foreground">Calculating...</h2>
+              )}
               <NumberPyramid 
                 steps={pyramidSteps} 
-                visibleRows={visiblePyramidRows} 
+                visibleRows={phase === 'result' ? pyramidSteps.length : visiblePyramidRows} 
               />
             </div>
           )}
