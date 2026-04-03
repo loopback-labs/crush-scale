@@ -3,12 +3,12 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { copyFileSync } from "node:fs";
 
-// GitHub project Pages URL is https://<user>.github.io/<repo>/ — base must match the repo name.
-const repoBase = "/crush-scale/";
+// Domain-safe default for custom domains; override with VITE_BASE_PATH for subpath deploys.
+const basePath = process.env.VITE_BASE_PATH || "/";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
-  base: command === "build" ? repoBase : "/",
+  base: command === "build" ? basePath : "/",
   server: {
     host: "::",
     port: 8080,
