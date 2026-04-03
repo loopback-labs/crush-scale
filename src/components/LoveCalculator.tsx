@@ -121,7 +121,7 @@ const LoveCalculator: React.FC = () => {
         {/* Title */}
         <header className="text-center mb-8">
           <h1 className="text-3xl md:text-5xl text-primary mb-2">
-            💕 Love Calculator 💕
+            💕 Lovemeter 💕
           </h1>
           <p className="text-muted-foreground">
             Find out your love percentage!
@@ -184,7 +184,7 @@ const LoveCalculator: React.FC = () => {
           <p className="text-sm text-muted-foreground mb-2">
             Want to create something special?
           </p>
-          <a href="https://valentines-site.lovable.app" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 font-medium underline underline-offset-4 transition-colors">
+          <a href="https://lovelink.merchandice.in" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 font-medium underline underline-offset-4 transition-colors">
             💌 Check out our Valentine's Site Creator
           </a>
         </div>

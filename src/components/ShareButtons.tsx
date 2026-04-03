@@ -17,7 +17,7 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ percentage, name1, n
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Love Calculator Result 💕',
+          title: 'Lovemeter result 💕',
           text: shareText,
           url: shareUrl,
         });

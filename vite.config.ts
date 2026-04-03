@@ -22,7 +22,7 @@ export default defineConfig(({ mode, command }) => ({
     mode === "development" && componentTagger(),
     {
       name: "github-pages-spa-fallback",
-      apply: "build",
+      apply: "build" as const,
       closeBundle() {
         copyFileSync("dist/index.html", "dist/404.html");
       },
